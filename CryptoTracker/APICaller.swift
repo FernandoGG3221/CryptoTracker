@@ -27,7 +27,7 @@ final class APICaller{
         
         print(url)
         
-        let task = URLSession.shared.dataTask(with: url){
+        URLSession.shared.dataTask(with: url){
             (data, response, error) in
             
             guard let data = data, error == nil else {
@@ -37,15 +37,17 @@ final class APICaller{
             do{
                 
                 let coder = try JSONDecoder().decode([ModelCrypto].self, from: data)
-                completion(.success(coder))
-                print(coder)
+                DispatchQueue.main.async {
+                    completion(.success(coder))
+                }
+                
+                //print(coder)
                 
             }catch{
                 completion(.failure(error))
             }
             
-        }
-        task.resume()
+        }.resume()
     }
     
 }

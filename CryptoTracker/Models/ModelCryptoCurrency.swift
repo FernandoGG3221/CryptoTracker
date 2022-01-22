@@ -19,6 +19,7 @@ struct ModelCrypto: Codable{
     let volume_1hrs_usd:Double?
     let volume_1day_usd:Double?
     let volume_1mth_usd:Double?
+    let price_usd:Double?
     let data_start:String?
     let data_end:String?
 }
