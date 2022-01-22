@@ -13,6 +13,10 @@
 		C14BEA7F279B314900311FAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C14BEA7D279B314900311FAB /* Main.storyboard */; };
 		C14BEA81279B314A00311FAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14BEA80279B314A00311FAB /* Assets.xcassets */; };
 		C14BEA84279B314A00311FAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C14BEA82279B314A00311FAB /* LaunchScreen.storyboard */; };
+		C14BEA8C279B425400311FAB /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14BEA8B279B425400311FAB /* APICaller.swift */; };
+		C14BEA90279B6E5700311FAB /* itemTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14BEA8E279B6E5700311FAB /* itemTable.swift */; };
+		C14BEA91279B6E5700311FAB /* itemTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = C14BEA8F279B6E5700311FAB /* itemTable.xib */; };
+		C14BEA94279B71AB00311FAB /* ModelCryptoCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14BEA93279B71AB00311FAB /* ModelCryptoCurrency.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		C14BEA80279B314A00311FAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C14BEA83279B314A00311FAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C14BEA85279B314A00311FAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C14BEA8B279B425400311FAB /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		C14BEA8E279B6E5700311FAB /* itemTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemTable.swift; sourceTree = "<group>"; };
+		C14BEA8F279B6E5700311FAB /* itemTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = itemTable.xib; sourceTree = "<group>"; };
+		C14BEA93279B71AB00311FAB /* ModelCryptoCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCryptoCurrency.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +64,8 @@
 		C14BEA76279B314900311FAB /* CryptoTracker */ = {
 			isa = PBXGroup;
 			children = (
+				C14BEA92279B719800311FAB /* Models */,
+				C14BEA8D279B6E3100311FAB /* Table */,
 				C14BEA77279B314900311FAB /* AppDelegate.swift */,
 				C14BEA79279B314900311FAB /* SceneDelegate.swift */,
 				C14BEA7B279B314900311FAB /* ViewController.swift */,
@@ -63,8 +73,26 @@
 				C14BEA80279B314A00311FAB /* Assets.xcassets */,
 				C14BEA82279B314A00311FAB /* LaunchScreen.storyboard */,
 				C14BEA85279B314A00311FAB /* Info.plist */,
+				C14BEA8B279B425400311FAB /* APICaller.swift */,
 			);
 			path = CryptoTracker;
+			sourceTree = "<group>";
+		};
+		C14BEA8D279B6E3100311FAB /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				C14BEA8E279B6E5700311FAB /* itemTable.swift */,
+				C14BEA8F279B6E5700311FAB /* itemTable.xib */,
+			);
+			path = Table;
+			sourceTree = "<group>";
+		};
+		C14BEA92279B719800311FAB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C14BEA93279B71AB00311FAB /* ModelCryptoCurrency.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C14BEA84279B314A00311FAB /* LaunchScreen.storyboard in Resources */,
+				C14BEA91279B6E5700311FAB /* itemTable.xib in Resources */,
 				C14BEA81279B314A00311FAB /* Assets.xcassets in Resources */,
 				C14BEA7F279B314900311FAB /* Main.storyboard in Resources */,
 			);
@@ -138,9 +167,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C14BEA90279B6E5700311FAB /* itemTable.swift in Sources */,
+				C14BEA94279B71AB00311FAB /* ModelCryptoCurrency.swift in Sources */,
 				C14BEA7C279B314900311FAB /* ViewController.swift in Sources */,
 				C14BEA78279B314900311FAB /* AppDelegate.swift in Sources */,
 				C14BEA7A279B314900311FAB /* SceneDelegate.swift in Sources */,
+				C14BEA8C279B425400311FAB /* APICaller.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
