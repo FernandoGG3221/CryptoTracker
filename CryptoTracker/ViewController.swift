@@ -7,13 +7,17 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     //MARK: - Outlets
     @IBOutlet weak var tableCrypto: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     //MARK: - Properties
     var arrCrypto = [Any]()
+    var arrAssets = [Any]()
+    var arrFilter = [Any]()
+    
     static let numberFormatter:NumberFormatter = {
         
         let formatter = NumberFormatter()
@@ -30,6 +34,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Do any additional setup after loading the view.
         webService()
         configureTable()
+        arrFilter = arrCrypto
     }
     
     //MARK: - Configurations
@@ -38,6 +43,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableCrypto.delegate = self
         tableCrypto.dataSource = self
         tableCrypto.register(itemTable.nib(), forCellReuseIdentifier: itemTable.identifier)
+        
+        //Configure searchBar
+        searchBar.delegate = self
     }
     
     //MARK: - WebService
@@ -85,6 +93,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         
                         self!.arrCrypto.append(arrData)
                         arrData = [Any]()
+                        
+                        self!.arrFilter = self!.arrCrypto
                     }
                     
                     print("Recargando datos")
@@ -99,6 +109,73 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 }
             }
+        //getAllAssets()
+    }
+    
+    //MARK: - Search Bar
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        arrFilter = []
+        
+        if searchText == ""{
+            arrFilter = arrCrypto
+            recoveryInfo()
+        }else{
+            print("Arreglo de Cryptos", arrFilter)
+            
+            for i in arrCrypto{
+                print(i)
+                let temp = i as! [Any]
+                
+                let nameCrypto = temp[0] as! String
+                
+                if nameCrypto.lowercased().contains(searchText.lowercased()){
+                    print("Found Crypto")
+                    arrFilter.append(i)
+                    recoveryInfo()
+                }else{
+                    print("Not Found Crypto")
+                }
+                
+            }
+        }
+    }
+    
+    func getAllAssets(){
+        
+        APICaller.shared.getAllAssetsCrypto{
+            [weak self] (result) -> Void in
+            
+            switch result{
+            case .success(let model):
+                print("Succes get Assets")
+                //var cont = 0
+                var arrData = [Any]()
+                
+                for i in model{
+                    if let asset = i.asset_id{
+                        arrData.append(asset)
+                    }else{
+                        arrData.append("N/A")
+                    }
+                    
+                    if let url = i.url{
+                        arrData.append(url)
+                    }else{
+                        arrData.append("N/A")
+                    }
+                    
+                    self!.arrAssets.append(arrData)
+                    arrData = [Any]()
+                }
+                
+            case .failure(let err):
+                print("Fail")
+                print(err)
+                
+            }
+        }
+        
+        
         
     }
     
@@ -108,16 +185,83 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //MARK: - Table View
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(arrCrypto.count)
-        return arrCrypto.count
+        
+        return arrFilter.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: itemTable.identifier, for: indexPath) as! itemTable
         
-        cell.configureCell(arrData: arrCrypto[indexPath.row] as! [Any])
+        cell.configureCell(arrData: arrFilter[indexPath.row] as! [Any])
         
         return cell
     }
+    
+    func compareDatas(){
+        print("\n\n\n\nInicio-------------------")
+        print(arrAssets.count)
+        
+        var arrTemp = [String]()
+        var count = 0
+        var arrDataAsset = [Any]()
+        
+        for i in arrCrypto{
+            let temp = i as! [Any]
+            arrTemp.append("\(temp[0])")
+        }
+        
+        print(arrTemp)
+        
+        
+        for i in arrAssets{
+            let tem = i as! [String]
+            if count <= arrAssets.count - 1{
+                let item = tem.filter{_ in tem[0].contains(arrTemp[count]) }
+                arrDataAsset.append(item)
+                count += 1
+                print(arrDataAsset)
+            }else{
+                break
+                
+            }
+            
+        }
+        
+        print(arrDataAsset)
+        print("Fin-------------------\n\n\n\n")
+    }
+    
+    
+    func fillArr(arrTemp:[String]){
+        
+        var count = 0
+        var arrDataAsset = [Any]()
+        
+        for j in arrAssets{
+            let tem = j as! [Any]
+            
+            if count != arrTemp.count{
+                
+                print("Contador", count)
+                if "\(tem[0])" ==  arrTemp[count]{
+                    arrDataAsset.append(tem)
+                    
+                }
+                count += 1
+                
+            }else if count >= arrTemp.count{
+                print(count)
+                print(arrTemp.count)
+                print(arrDataAsset)
+                print("Se llegó al limite")
+                return
+            }
+            
+            
+        }
+        print(arrDataAsset.count)
+        print(arrDataAsset)
+    }
+    
 }
 

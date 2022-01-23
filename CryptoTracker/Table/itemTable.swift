@@ -44,10 +44,16 @@ class itemTable: UITableViewCell {
         lblPrice.text = "\(arrData[3])"
     }
     
+    func configureImageCell(arrData:[Any]){
+        print(arrData)
+        imgLogo.image = UIImage(data: arrData[0] as! Data)
+    }
+    
     private func configureLabels(){
         lblNameCryp.textColor = .black
         lblPrice.textColor = .green
         lblVolume.textColor = .lightGray
+        imgLogo.backgroundColor = .lightGray
     }
     
 }
