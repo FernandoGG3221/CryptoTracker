@@ -21,7 +21,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     static let numberFormatter:NumberFormatter = {
         
         let formatter = NumberFormatter()
-        formatter.locale = .current
+        formatter.locale = .autoupdatingCurrent
         formatter.allowsFloats = true
         formatter.numberStyle = .currency
         formatter.formatterBehavior = .default
@@ -32,13 +32,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        webService()
-        configureTable()
-        arrFilter = arrCrypto
+        
+        if NetworkMonitor.shared.isConnected{
+            print("Tienes internet")
+            webService()
+            configureTable()
+            arrFilter = arrCrypto
+        }else{
+            print("No tienes internet ")
+            internetConection()
+        }
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
     }
     
     //MARK: - Configurations
-    func configureTable(){
+    private func configureTable(){
         title = "Crypto Tracker"
         tableCrypto.delegate = self
         tableCrypto.dataSource = self
@@ -48,8 +61,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         searchBar.delegate = self
     }
     
+    
+    private func internetConection(){
+        let message = UIAlertController(title: "Conexión a internet", message: "No tienes internet", preferredStyle: .alert)
+        let btnOk = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        message.addAction(btnOk)
+        
+        self.present(message, animated: true, completion: nil)
+    }
+    
     //MARK: - WebService
-    func webService(){
+    private func webService(){
         
             APICaller.shared.getAllCryptoData{
                 
@@ -140,7 +163,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    func getAllAssets(){
+    private func getAllAssets(){
         
         APICaller.shared.getAllAssetsCrypto{
             [weak self] (result) -> Void in
@@ -179,7 +202,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    func recoveryInfo(){
+    private func recoveryInfo(){
         tableCrypto.reloadData()
     }
     
@@ -196,6 +219,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return cell
     }
+    
+    
     
     func compareDatas(){
         print("\n\n\n\nInicio-------------------")
@@ -232,7 +257,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     
-    func fillArr(arrTemp:[String]){
+    private func fillArr(arrTemp:[String]){
         
         var count = 0
         var arrDataAsset = [Any]()
@@ -262,6 +287,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print(arrDataAsset.count)
         print(arrDataAsset)
     }
+    
+    
     
 }
 

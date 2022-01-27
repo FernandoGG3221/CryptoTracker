@@ -19,6 +19,8 @@
 		C14BEA94279B71AB00311FAB /* ModelCryptoCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14BEA93279B71AB00311FAB /* ModelCryptoCurrency.swift */; };
 		C14BEA97279CA31600311FAB /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14BEA96279CA31600311FAB /* Extensions.swift */; };
 		C14BEA99279CAEDF00311FAB /* ModelAssetsCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14BEA98279CAEDF00311FAB /* ModelAssetsCrypto.swift */; };
+		C14BEABB27A0B79500311FAB /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14BEABA27A0B79500311FAB /* NetworkMonitor.swift */; };
+		C1B45ADD27A1D84300046AB2 /* LoginViewC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B45ADC27A1D84300046AB2 /* LoginViewC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		C14BEA93279B71AB00311FAB /* ModelCryptoCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCryptoCurrency.swift; sourceTree = "<group>"; };
 		C14BEA96279CA31600311FAB /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C14BEA98279CAEDF00311FAB /* ModelAssetsCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelAssetsCrypto.swift; sourceTree = "<group>"; };
+		C14BEABA27A0B79500311FAB /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		C1B45ADC27A1D84300046AB2 /* LoginViewC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +79,9 @@
 				C14BEA79279B314900311FAB /* SceneDelegate.swift */,
 				C14BEA7B279B314900311FAB /* ViewController.swift */,
 				C14BEA8B279B425400311FAB /* APICaller.swift */,
+				C14BEABA27A0B79500311FAB /* NetworkMonitor.swift */,
 				C14BEA7D279B314900311FAB /* Main.storyboard */,
+				C1B45ADC27A1D84300046AB2 /* LoginViewC.swift */,
 				C14BEA80279B314A00311FAB /* Assets.xcassets */,
 				C14BEA82279B314A00311FAB /* LaunchScreen.storyboard */,
 				C14BEA85279B314A00311FAB /* Info.plist */,
@@ -181,6 +187,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1B45ADD27A1D84300046AB2 /* LoginViewC.swift in Sources */,
 				C14BEA90279B6E5700311FAB /* itemTable.swift in Sources */,
 				C14BEA94279B71AB00311FAB /* ModelCryptoCurrency.swift in Sources */,
 				C14BEA7C279B314900311FAB /* ViewController.swift in Sources */,
@@ -188,6 +195,7 @@
 				C14BEA7A279B314900311FAB /* SceneDelegate.swift in Sources */,
 				C14BEA8C279B425400311FAB /* APICaller.swift in Sources */,
 				C14BEA97279CA31600311FAB /* Extensions.swift in Sources */,
+				C14BEABB27A0B79500311FAB /* NetworkMonitor.swift in Sources */,
 				C14BEA99279CAEDF00311FAB /* ModelAssetsCrypto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
