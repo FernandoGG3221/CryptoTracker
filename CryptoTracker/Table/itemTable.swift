@@ -56,4 +56,27 @@ class itemTable: UITableViewCell {
         imgLogo.backgroundColor = .lightGray
     }
     
+    func configureVM(with viewModel:CryptosViewModel){
+        lblNameCryp.text = viewModel.name
+        lblVolume.text = "\(viewModel.volume)"
+        lblPrice.text = "\(viewModel.price)"
+        
+        
+        if let data = viewModel.iconData{
+            imgLogo.image = UIImage(data: data)
+        }else{
+            if let url = viewModel.iconUrl{
+                URLSession.shared.dataTask(with: url){
+                    [weak self] data, _, _ in
+                    if let data = data {
+                        viewModel.iconData = data
+                        DispatchQueue.main.async {
+                            self?.imgLogo.image = UIImage(data: data)
+                        }
+                    }
+                }.resume()
+            }
+        }
+    }
+    
 }

@@ -29,12 +29,21 @@ final class APICaller{
         
     }
     
+    public var arrIcons = [ModelAssetsCrypto]()
+    
+    private var whenRedyBlock: ((Result<[ModelCrypto], Error>) -> Void)?
+    
     public func getAllCryptoData(completion:@escaping (Result<[ModelCrypto], Error>) -> Void){
         guard let url = URL(string: Constants.assetsEndPoint + "?apikey=" + Constants.apiKey) else{
             return
         }
         
-        print(url)
+        //print(url)
+        guard !arrIcons.isEmpty else{
+            whenRedyBlock = completion
+            return
+            
+        }
         
         URLSession.shared.dataTask(with: url){
             (data, response, error) in
@@ -46,8 +55,13 @@ final class APICaller{
             do{
                 
                 let coder = try JSONDecoder().decode([ModelCrypto].self, from: data)
+                
                 DispatchQueue.main.async {
-                    completion(.success(coder))
+                    completion(.success(coder.sorted {
+                            first, second -> Bool in
+                            return first.price_usd ?? 0 > second.price_usd ?? 0
+                        }
+                    ))
                 }
                 
                 //print(coder)
@@ -59,7 +73,7 @@ final class APICaller{
         }.resume()
     }
     
-    public func getAllAssetsCrypto(completition: @escaping (Result <[ModelAssetsCrypto], Error>) -> Void){
+    public func getAllAssetsCrypto(){
         
         guard let url = URL(string: ConstantsAssets.assetsEndPoint + ConstantsAssets.apiKey) else{
             return
@@ -68,21 +82,20 @@ final class APICaller{
         print(url)
         
         URLSession.shared.dataTask(with: url){
-            (data, response, error) in
+            [weak self] (data, response, error) in
             
             guard let data = data, error == nil else {
                 return
             }
             
             do{
-                let coder = try JSONDecoder().decode([ModelAssetsCrypto].self, from: data)
-                
-                DispatchQueue.main.async {
-                    completition(.success(coder))
+                self?.arrIcons = try JSONDecoder().decode([ModelAssetsCrypto].self, from: data)
+                if let completition = self?.whenRedyBlock{
+                    self?.getAllCryptoData(completion: completition)
                 }
                 
             }catch{
-                completition(.failure(error))
+                //completition(.failure(error))
                 //print(err.localizedDescription)
             }
             

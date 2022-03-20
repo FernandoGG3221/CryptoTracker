@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C11A031627E6640F00844D29 /* CryptosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11A031527E6640F00844D29 /* CryptosViewModel.swift */; };
 		C14BEA78279B314900311FAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14BEA77279B314900311FAB /* AppDelegate.swift */; };
 		C14BEA7A279B314900311FAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14BEA79279B314900311FAB /* SceneDelegate.swift */; };
 		C14BEA7C279B314900311FAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14BEA7B279B314900311FAB /* ViewController.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C11A031527E6640F00844D29 /* CryptosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptosViewModel.swift; sourceTree = "<group>"; };
 		C14BEA74279B314900311FAB /* CryptoTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C14BEA77279B314900311FAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C14BEA79279B314900311FAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +55,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C11A031427E663E700844D29 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C11A031527E6640F00844D29 /* CryptosViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		C14BEA6B279B314900311FAB = {
 			isa = PBXGroup;
 			children = (
@@ -72,6 +82,7 @@
 		C14BEA76279B314900311FAB /* CryptoTracker */ = {
 			isa = PBXGroup;
 			children = (
+				C11A031427E663E700844D29 /* ViewModel */,
 				C14BEA95279CA30000311FAB /* Extension */,
 				C14BEA92279B719800311FAB /* Models */,
 				C14BEA8D279B6E3100311FAB /* Table */,
@@ -194,6 +205,7 @@
 				C14BEA78279B314900311FAB /* AppDelegate.swift in Sources */,
 				C14BEA7A279B314900311FAB /* SceneDelegate.swift in Sources */,
 				C14BEA8C279B425400311FAB /* APICaller.swift in Sources */,
+				C11A031627E6640F00844D29 /* CryptosViewModel.swift in Sources */,
 				C14BEA97279CA31600311FAB /* Extensions.swift in Sources */,
 				C14BEABB27A0B79500311FAB /* NetworkMonitor.swift in Sources */,
 				C14BEA99279CAEDF00311FAB /* ModelAssetsCrypto.swift in Sources */,

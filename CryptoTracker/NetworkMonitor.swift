@@ -34,6 +34,7 @@ final class NetworkMonitor{
         monitor.start(queue: queue)
         monitor.pathUpdateHandler = {
             [weak self] (path) in
+            print("Iniciando monitoreo")
             print(path.status)
             self?.isConnected = path.status != .unsatisfied
             self?.getConnetionType(path: path)
@@ -42,6 +43,7 @@ final class NetworkMonitor{
     }
     
     public func stopMonitoring(){
+        print("Parando el monitoreo de red")
         monitor.cancel()
     }
     

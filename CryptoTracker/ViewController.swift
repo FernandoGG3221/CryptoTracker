@@ -18,10 +18,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var arrAssets = [Any]()
     var arrFilter = [Any]()
     
+    private var arrViewModels = [CryptosViewModel]()
+    
     static let numberFormatter:NumberFormatter = {
         
         let formatter = NumberFormatter()
-        formatter.locale = .autoupdatingCurrent
+        formatter.locale = .current
         formatter.allowsFloats = true
         formatter.numberStyle = .currency
         formatter.formatterBehavior = .default
@@ -38,6 +40,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             webService()
             configureTable()
             arrFilter = arrCrypto
+            
         }else{
             print("No tienes internet ")
             internetConection()
@@ -81,53 +84,40 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 switch result{
                     
                 case .success(let model):
-                    print("Success")
+                    print("-----------------Success-----------------")
                     
-                    var arrData = [Any]()
-                
-                    for i in model{
-                        
-                        if let name = i.name{
-                            arrData.append(name)
-                        }else{
-                            arrData.append("N/A")
-                        }
-                        
-                        if let asset = i.asset_id{
-                            arrData.append(asset)
-                        }else{
-                            arrData.append("N/A")
-                        }
-                        
-                        if let dayU = i.volume_1day_usd{
-                            arrData.append(dayU)
-                        }else{
-                            arrData.append("0")
-                        }
-                        
-                        if let price = i.price_usd{
-                            let formatter = ViewController.numberFormatter
-                            let priceString = formatter.string(from: NSNumber(floatLiteral: Double(price)))
-                            
-                            arrData.append(priceString!)
-                        }else{
-                            arrData.append("0")
-                        }
-                        
-                        self!.arrCrypto.append(arrData)
-                        arrData = [Any]()
-                        
-                        self!.arrFilter = self!.arrCrypto
-                    }
+                    //var arrData = [Any]()
                     
-                    print("Recargando datos")
-                    //self!.recoveryInfo()
+                    
+                    self?.arrViewModels = model.compactMap({ model in
+                        let volume = model.volume_1day_usd ?? 0
+                        let price = model.price_usd ?? 0
+                        let formatter = ViewController.numberFormatter
+                        let priceString = formatter.string(from: NSNumber (value: price))
+                        let valueString = formatter.string(from: NSNumber( value: volume))
+                        
+                        //Obtener los iconos del endpoint
+                        let iconUrl = URL(string: APICaller.shared.arrIcons.filter({ icon in
+                            icon.asset_id == model.asset_id
+                        }).first?.url ?? "")
+                        
+                        return CryptosViewModel.init(name: model.name ?? "N/A",
+                                                     symbol: model.asset_id ?? "N/A",
+                                                     price: priceString ?? "N/A",
+                                                     volume: valueString ?? "N/A",
+                                                     iconUrl:iconUrl
+                        )
+                    })
+                    
+                    print(self!.arrViewModels)
+                    
+                    
                     DispatchQueue.main.async {
                         self!.recoveryInfo()
                     }
                     
                 case .failure(let error):
-                    print("Error")
+                    print("-----------------Error-----------------")
                     print(error.localizedDescription)
                 
                 }
@@ -162,11 +152,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
-    
+    /*
     private func getAllAssets(){
         
         APICaller.shared.getAllAssetsCrypto{
-            [weak self] (result) -> Void in
+            [weak self] (result) in
             
             switch result{
             case .success(let model):
@@ -201,6 +191,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         
     }
+     
+     */
     
     private func recoveryInfo(){
         tableCrypto.reloadData()
@@ -209,13 +201,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //MARK: - Table View
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return arrFilter.count
+        return arrViewModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: itemTable.identifier, for: indexPath) as! itemTable
         
-        cell.configureCell(arrData: arrFilter[indexPath.row] as! [Any])
+        //cell.configureCell(arrData: arrFilter[indexPath.row] as! [Any])
+        cell.configureVM(with: arrViewModels[indexPath.row])
         
         return cell
     }
@@ -288,7 +281,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print(arrDataAsset)
     }
     
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.tableCrypto.endEditing(true)
+    }
     
 }
 

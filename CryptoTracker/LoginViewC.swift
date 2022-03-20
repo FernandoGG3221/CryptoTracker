@@ -68,6 +68,7 @@ class LoginViewC: UIViewController, UITextFieldDelegate {
             lblTitleOption.text = "Iniciar sesión"
             edtConfirmPass.isHidden = true
             lblConfirmPass.isHidden = true
+            
         }else{
             lblTitleOption.text = "Registrar usuario"
             edtConfirmPass.isHidden = false
@@ -95,8 +96,6 @@ class LoginViewC: UIViewController, UITextFieldDelegate {
     }
     
     private func configureKeyboard(){
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(_:)))
-        self.view.addGestureRecognizer(tapGesture)
         
         //Deteccion de eventos del teclado
         NotificationCenter.default.addObserver(self, selector: #selector(changeKB(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -104,11 +103,6 @@ class LoginViewC: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(changeKB(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
-    @objc func hideKeyboard(_ sender: UITapGestureRecognizer){
-        edtEmail.resignFirstResponder()
-        edtPass.resignFirstResponder()
-        edtConfirmPass.resignFirstResponder()
-    }
     
     @objc func changeKB(notification: Notification){
         let infoKeyboard = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
@@ -148,10 +142,21 @@ class LoginViewC: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     deinit{
+        print("###############")
+        print("Deinit")
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
+    @IBAction func btnSend(_ sender: UIButton) {
+        
+        NetworkMonitor.shared.stopMonitoring()
+        
+    }
 }
